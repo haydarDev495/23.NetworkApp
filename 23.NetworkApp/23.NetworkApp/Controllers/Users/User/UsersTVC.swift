@@ -12,14 +12,12 @@ class UsersTVC: UITableViewController {
     var users: [User] = []
 
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         users.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
         cell.textLabel?.text = users[indexPath.row].name
         cell.detailTextLabel?.text = users[indexPath.row].username
         return cell
@@ -34,12 +32,8 @@ class UsersTVC: UITableViewController {
     }
     
     // MARK: - Func's
-    
     func fetchUsers() {
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else {
-            return
-        }
-
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             
             if let error = error {
@@ -50,7 +44,6 @@ class UsersTVC: UITableViewController {
             
             do {
                 self.users = try JSONDecoder().decode([User].self, from: data)
-                print(self.users)
             } catch {
                 print(error)
             }

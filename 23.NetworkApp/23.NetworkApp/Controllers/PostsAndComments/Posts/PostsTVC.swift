@@ -9,29 +9,37 @@ import UIKit
 
 class PostsTVC: UITableViewController {
     var user: User?
-    
     var posts: [Post] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPost()
-
+        title = "Posts"
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToDetailPost", sender: indexPath)
+    }
+    
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? DetailPostVC,
+           let indexPath = sender as? IndexPath {
+            vc.post = posts[indexPath.row]
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         posts.count
-        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let post = posts[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = post.title
-        cell.detailTextLabel?.text = post.body
         return cell
     }
     
@@ -50,7 +58,6 @@ class PostsTVC: UITableViewController {
                 
                 do {
                     self.posts = try JSONDecoder().decode([Post].self, from: data)
-                    print(self.posts)
                 } catch {
                     print(error)
                 }

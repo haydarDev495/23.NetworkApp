@@ -44,9 +44,21 @@ struct Geo: Codable {
 }
 
 // MARK: - Post
+
 struct Post: Decodable {
     let userId: Int?
     let id: Int?
     let title: String?
     let body: String?
 }
+
+// MARK: - Comments
+
+struct Comments: Decodable {
+    let postId: Int?
+    let id: Int?
+    let name: String?
+    let email: String?
+    let body: String?
+}
+

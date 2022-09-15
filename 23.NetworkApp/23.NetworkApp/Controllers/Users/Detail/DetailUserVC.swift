@@ -16,13 +16,14 @@ class DetailUserVC: UIViewController {
     @IBOutlet private weak var email: UILabel!
     @IBOutlet private weak var phone: UILabel!
     @IBOutlet private weak var website: UILabel!
-//    @IBOutlet var address: Address?
-//    @IBOutlet var company: Company?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
+    }
+    
+    @IBAction func addressButtonAction() {
+        performSegue(withIdentifier: "goToAddress", sender: nil)
     }
     
     @IBAction func postAction() {
@@ -30,18 +31,22 @@ class DetailUserVC: UIViewController {
         vc.user = user
         navigationController?.pushViewController(vc, animated: true)
     }
-    @IBAction func albomAction() {
-        
-    }
-    @IBAction func toDoAction() {
-        
-    }
     
     private func setupUI() {
-        name.text = user?.name
-        username.text = user?.username
-        email.text = user?.email
-        phone.text = user?.phone
-        website.text = user?.website
+        title = "Detail"
+        name.text = "Name: \(user?.name ?? "")"
+        username.text = "Username: \(user?.username ?? "")"
+        email.text = "Email: \(user?.email ?? "")"
+        phone.text = "Phone: \(user?.phone ?? "")"
+        website.text = "Website: \(user?.website ?? "")"
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let vc = segue.destination as? AddressVC {
+            vc.address = user?.address
+        }
+    }
+
 }

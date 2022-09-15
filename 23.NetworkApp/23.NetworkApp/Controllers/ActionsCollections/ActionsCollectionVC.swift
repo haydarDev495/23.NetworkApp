@@ -17,7 +17,6 @@ class ActionsCollectionVC: UICollectionViewController {
     private let reuseIdentifier = "ActionCollectionViewCell"
     /// массив наших Actions
     private let actions = Actons.allCases
-    
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -25,18 +24,16 @@ class ActionsCollectionVC: UICollectionViewController {
         usersTVC.fetchUsers()
     }
 
-    
-
     // MARK: UICollectionViewDataSource
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         actions.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ActionCollectionViewCell
         cell.labelAction.text = actions[indexPath.row].rawValue
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.black.cgColor
         return cell
     }
 
@@ -57,7 +54,6 @@ class ActionsCollectionVC: UICollectionViewController {
 
 extension ActionsCollectionVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.width - 20
-        return CGSize(width: (width), height: width / 2)
+        return CGSize(width: 180, height: 180)
     }
 }

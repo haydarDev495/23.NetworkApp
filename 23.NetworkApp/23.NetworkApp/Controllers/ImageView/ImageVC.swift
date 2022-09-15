@@ -35,7 +35,7 @@ class ImageVC: UIViewController {
                     self?.imageView.image = UIImage(data: data)
                 }
             }
-        }//.resume()
+        }
         task.resume()
     }
 }
